@@ -20,6 +20,8 @@
     "nextjs-toploader": "^3.7.15",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.2",
+    "react-hot-toast": "^2.4.1",
     "slugify": "^1.6.6"
   },
   "devDependencies": {

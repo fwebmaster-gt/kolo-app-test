@@ -2,8 +2,9 @@ import { Button, Container, Typography } from "@mui/material";
 import Link from "next/link";
 import Filter from "@/components/Filter";
 import CustomPagination from "@/components/Pagination";
-import TableItems from "@/components/TableItems";
+
 import { apiClient } from "@/constants/axios";
+import TableItems from "@/components/TableItems";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +38,7 @@ export default async function Home({
   return (
     <Container>
       <Typography variant="h5" component="h2">
-        Listado de Items
+        Listado de productos
       </Typography>
 
       <Filter />

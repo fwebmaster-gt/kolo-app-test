@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const validTypes = ["bien", "servicio"];
@@ -22,4 +23,26 @@ export function validateItemToCreate(body: any) {
   }
 
   return null;
+}
+
+export function cleanItemBody(body: any) {
+  let data: { [key: string]: any } = {};
+
+  if (body.nombre) {
+    data.nombre = body.nombre;
+  }
+
+  if (body.precio) {
+    data.precio = body.precio;
+  }
+
+  if (body.codigo) {
+    data.precio = body.precio;
+  }
+
+  if (body.tipo) {
+    data.tipo = body.tipo;
+  }
+
+  return data;
 }

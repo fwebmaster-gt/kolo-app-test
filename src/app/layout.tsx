@@ -3,6 +3,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/constants/theme";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,13 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <html className="root" lang="es">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <body suppressHydrationWarning={true} className="app_layout">
-          <NextTopLoader />
+      <body suppressHydrationWarning={true} className="app_layout">
+        <Toaster />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+
+          <NextTopLoader showSpinner={false} />
           {children}
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
