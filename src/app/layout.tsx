@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/constants/theme";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <body suppressHydrationWarning={true} className="app_layout">
+          <NextTopLoader />
           {children}
         </body>
       </ThemeProvider>

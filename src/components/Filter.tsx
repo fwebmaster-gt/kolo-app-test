@@ -8,7 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
 import { FormEvent, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
@@ -25,25 +26,20 @@ export default function Filter() {
       e.preventDefault();
     }
 
-    // Preserva otros parámetros en la URL y actualiza solo "search"
     const params = new URLSearchParams(searchParams.toString());
     params.set("search", search);
-    params.set("page", "1"); // Reiniciar a la página 1 cuando hay un filtro nuevo
+    params.set("page", "1");
 
-    // Actualizar la URL, desencadenando una nueva solicitud SSR
     router.push(`/?${params.toString()}`);
   };
 
   const handleFilterByTipo = (tipoParam: string) => {
-    // Preserva otros parámetros en la URL y actualiza solo "search"
     const params = new URLSearchParams(searchParams.toString());
     params.set("tipo", tipoParam === "todos" ? "" : tipoParam);
-    params.set("page", "1"); // Reiniciar a la página 1 cuando hay un filtro nuevo
-    // Actualizar la URL, desencadenando una nueva solicitud SSR
+    params.set("page", "1");
     router.push(`/?${params.toString()}`);
   };
 
-  // efecto; si el search esta vacio lo elimina
   useEffect(() => {
     setIsMounted(true);
 
@@ -98,14 +94,15 @@ export default function Filter() {
           }}
         >
           <FormControl>
-            <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+            <InputLabel id="tipo-label">Tipo</InputLabel>
             <Select
+              size="small"
               value={searchParams.get("tipo") || "todos"}
               defaultValue={"todos"}
               style={{ width: "140px" }}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Age"
+              labelId="tipo-label"
+              id="tipo"
+              label="Tipo"
               onChange={(e) => handleFilterByTipo(e.target.value)}
             >
               <MenuItem value={"todos"}>Todos</MenuItem>

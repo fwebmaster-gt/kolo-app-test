@@ -30,8 +30,8 @@ export default function TableItems({ items }: { items: Item[] }) {
               <TableCell>
                 Q
                 {row.precio.toLocaleString("en-US", {
-                  minimumFractionDigits: 2, // Asegura siempre 2 decimales
-                  maximumFractionDigits: 2, // Limita a 2 decimales
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
                 })}
               </TableCell>
               <TableCell style={{ textTransform: "capitalize" }}>

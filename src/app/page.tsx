@@ -1,4 +1,3 @@
-// app/items/page.tsx
 import { Button, Container, Typography } from "@mui/material";
 import Link from "next/link";
 import Filter from "@/components/Filter";
@@ -6,9 +5,8 @@ import CustomPagination from "@/components/Pagination";
 import TableItems from "@/components/TableItems";
 import { apiClient } from "@/constants/axios";
 
-export const dynamic = "force-dynamic"; // Garantiza que la página se regenere en cada request si está en cache
+export const dynamic = "force-dynamic";
 
-// Este es un componente que usa SSR
 export default async function Home({
   searchParams,
 }: {
@@ -30,7 +28,6 @@ export default async function Home({
     pageSize = "10",
   } = searchParams;
 
-  // Llama a la API desde el servidor para obtener los datos
   const response = await apiClient.get(
     `/items?page=${page}&pageSize=${pageSize}&search=${search}&tipo=${tipo}&startDate=${startDate}&endDate=${endDate}`
   );
@@ -54,9 +51,9 @@ export default async function Home({
       <TableItems items={data.results} />
 
       <CustomPagination
-        currentPage={+data.page} // Página actual (desde SSR)
-        totalItems={+data.totalItems} // Total de items (desde SSR)
-        pageSize={+data.pageSize} // Items por página
+        currentPage={+data.page}
+        totalItems={+data.totalItems}
+        pageSize={+data.pageSize}
       />
     </Container>
   );

@@ -3,8 +3,9 @@
 import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useRouter } from "nextjs-toploader/app";
 
 export default function CustomPagination({
   currentPage,
@@ -18,7 +19,6 @@ export default function CustomPagination({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Calcular la cantidad total de páginas
   const totalPages = Math.ceil(totalItems / pageSize);
 
   const handleChangePageSize = (pageSize: string) => {
@@ -26,7 +26,6 @@ export default function CustomPagination({
     params.set("pageSize", pageSize);
     params.set("page", "1");
 
-    // Actualiza la URL con el nuevo número de página
     router.push(`/?${params.toString()}`);
   };
 
@@ -34,29 +33,32 @@ export default function CustomPagination({
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
 
-    // Actualiza la URL con el nuevo número de página
     router.push(`/?${params.toString()}`);
   };
 
   return (
     <Stack
-      style={{
-        margin: "1rem 0",
+      sx={{
+        margin: "2rem 0",
         width: "100%",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: {
+          xs: "column",
+          sm: "row",
+        },
         alignItems: "center",
+        gap: "1rem",
       }}
       spacing={2}
     >
       <div>
         <FormControl>
-          <InputLabel id="per-page">Items por pagina</InputLabel>
+          <InputLabel id="per-page">Por pagina</InputLabel>
           <Select
             size="small"
             value={searchParams.get("pageSize") || "10"}
             defaultValue={"10"}
-            style={{ width: "140px" }}
+            style={{ width: "100px" }}
             labelId="per-page"
             label="pageSize"
             onChange={(e) => handleChangePageSize(e.target.value)}
