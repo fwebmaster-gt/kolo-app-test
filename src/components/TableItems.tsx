@@ -34,7 +34,9 @@ export default function TableItems({ items }: { items: Item[] }) {
                   maximumFractionDigits: 2, // Limita a 2 decimales
                 })}
               </TableCell>
-              <TableCell>{row.tipo}</TableCell>
+              <TableCell style={{ textTransform: "capitalize" }}>
+                {row.tipo}
+              </TableCell>
               <TableCell>{row.codigo}</TableCell>
             </TableRow>
           ))}
