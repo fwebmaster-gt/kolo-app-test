@@ -1,6 +1,8 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// VALIDACIONES DE BACKEND
+
 const validTypes = ["bien", "servicio"];
 
 export function validateItemToCreate(body: any) {
