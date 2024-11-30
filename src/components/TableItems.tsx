@@ -7,10 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Item } from "@prisma/client";
-import ItemActions from "./ItemActions";
-import { Alert, Chip, Stack } from "@mui/material";
+import { Alert, Button, Chip, Stack } from "@mui/material";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
+import { formatPrice } from "@/constants/price";
+import Link from "next/link";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export default function TableItems({ items }: { items: Item[] }) {
   return (
@@ -23,9 +25,10 @@ export default function TableItems({ items }: { items: Item[] }) {
               <TableCell style={{ fontWeight: "bold" }}>Precio</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Tipo</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Codigo</TableCell>
-              <TableCell style={{ fontWeight: "bold" }} align="center">
-                Acciones
-              </TableCell>
+              <TableCell
+                style={{ fontWeight: "bold" }}
+                align="center"
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -44,13 +47,7 @@ export default function TableItems({ items }: { items: Item[] }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell>{row.nombre}</TableCell>
-                <TableCell>
-                  Q
-                  {row.precio.toLocaleString("en-US", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </TableCell>
+                <TableCell>Q{formatPrice(row.precio)}</TableCell>
                 <TableCell style={{ textTransform: "capitalize" }}>
                   <Chip
                     icon={
@@ -64,7 +61,13 @@ export default function TableItems({ items }: { items: Item[] }) {
                   />
                 </TableCell>
                 <TableCell>{row.codigo}</TableCell>
-                <ItemActions data={row} />
+                <TableCell align="center">
+                  <Link href={`/items/${row.id}`}>
+                    <Button>
+                      <VisibilityIcon />
+                    </Button>
+                  </Link>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

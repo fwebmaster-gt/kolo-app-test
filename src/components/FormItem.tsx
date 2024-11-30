@@ -185,7 +185,7 @@ const FormItem = ({ data }: { data?: Item }) => {
           </div>
         ) : (
           <div>
-            <Link href={"/"}>
+            <Link href={data ? `/items/${data.id}` : "/"}>
               <Button
                 style={{ margin: "0 1.6rem 0 0" }}
                 color="error"
