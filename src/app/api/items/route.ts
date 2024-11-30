@@ -73,12 +73,20 @@ export async function POST(req: NextRequest) {
   const validationError = validateItemToCreate(body);
 
   if (validationError) {
-    return NextResponse.json({ error: validationError }, { status: 400 });
+    return NextResponse.json({ message: validationError }, { status: 400 });
   }
 
   const codigo = body.codigo
     ? body.codigo
     : `${slugify(body.nombre)}-${nanoid(5)}`;
+
+  const existingItem = await prisma.item.findUnique({
+    where: { codigo },
+  });
+
+  if (existingItem) {
+    return NextResponse.json({ message: "CODE_EXIST" }, { status: 400 });
+  }
 
   const result = await prisma.item.create({
     data: {

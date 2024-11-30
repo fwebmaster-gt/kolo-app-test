@@ -5,6 +5,8 @@ import { Button, Container } from "@mui/material";
 import Link from "next/link";
 import FormItem from "@/components/FormItem";
 
+export const fetchCache = "force-no-store";
+
 const Page = async ({ params }: { params: { id: string } }) => {
   try {
     const response = await apiClient.get(`/items/${params.id}`);

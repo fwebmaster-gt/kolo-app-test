@@ -6,7 +6,7 @@ import CustomPagination from "@/components/Pagination";
 import { apiClient } from "@/constants/axios";
 import TableItems from "@/components/TableItems";
 
-export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default async function Home({
   searchParams,

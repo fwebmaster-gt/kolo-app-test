@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
   Button,
   Chip,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -14,6 +16,10 @@ import { Item, TipoItem } from "@prisma/client";
 import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
 import InfoIcon from "@mui/icons-material/Info";
+import { apiClient } from "@/constants/axios";
+import toast from "react-hot-toast";
+import { useRouter } from "nextjs-toploader/app";
+import { useState } from "react";
 
 export interface FormData {
   nombre: string;
@@ -23,6 +29,10 @@ export interface FormData {
 }
 
 const FormItem = ({ data }: { data?: Item }) => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
   const {
     handleSubmit,
     control,
@@ -36,8 +46,31 @@ const FormItem = ({ data }: { data?: Item }) => {
     },
   });
 
-  const onSubmit = (formData: FormData) => {
-    console.log(formData);
+  const onSubmit = async (formData: FormData) => {
+    setLoading(true);
+    try {
+      if (data) {
+        await apiClient.put(`/items/${data.id}`, formData);
+      } else {
+        await apiClient.post("/items", formData);
+      }
+
+      toast.success("Creado correctamente");
+
+      router.push("/");
+
+      router.refresh();
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        toast.error(
+          error.response.data.message === "CODE_EXIST"
+            ? "El código ya está en uso. Por favor, elige otro código."
+            : error.response.data.message
+        );
+      }
+
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,7 +89,7 @@ const FormItem = ({ data }: { data?: Item }) => {
       >
         <Chip
           icon={<InfoIcon color="primary" />}
-          label={`Actualizando Producto`}
+          label={`${data ? "Actualizando" : "Creando"} Producto`}
           variant="outlined"
         />
         <Controller
@@ -71,6 +104,7 @@ const FormItem = ({ data }: { data?: Item }) => {
               variant="outlined"
               error={!!errors.nombre}
               helperText={errors.nombre?.message}
+              disabled={loading}
             />
           )}
         />
@@ -86,6 +120,7 @@ const FormItem = ({ data }: { data?: Item }) => {
               variant="outlined"
               error={!!errors.codigo}
               helperText={errors.codigo?.message}
+              disabled={loading}
             />
           )}
         />
@@ -105,6 +140,7 @@ const FormItem = ({ data }: { data?: Item }) => {
                 label="Tipo"
                 error={!!errors.tipo}
                 style={{ width: "100%" }}
+                disabled={loading}
               >
                 <MenuItem value="servicio">Servicio</MenuItem>
                 <MenuItem value="bien">Bien</MenuItem>
@@ -138,25 +174,32 @@ const FormItem = ({ data }: { data?: Item }) => {
               variant="outlined"
               error={!!errors.precio}
               helperText={errors.precio?.message}
+              disabled={loading}
             />
           )}
         />
 
-        <div>
-          <Link href={"/"}>
-            <Button
-              style={{ margin: "0 1.6rem 0 0" }}
-              color="error"
-              type="button"
-            >
-              Cancelar
-            </Button>
-          </Link>
+        {loading ? (
+          <div style={{ margin: "0 auto" }}>
+            <CircularProgress />
+          </div>
+        ) : (
+          <div>
+            <Link href={"/"}>
+              <Button
+                style={{ margin: "0 1.6rem 0 0" }}
+                color="error"
+                type="button"
+              >
+                Cancelar
+              </Button>
+            </Link>
 
-          <Button type={"submit"} color="primary">
-            Guardar
-          </Button>
-        </div>
+            <Button type={"submit"} color="primary">
+              Guardar
+            </Button>
+          </div>
+        )}
       </Paper>
     </div>
   );
