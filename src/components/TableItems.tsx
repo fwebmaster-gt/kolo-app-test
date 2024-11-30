@@ -8,7 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Item } from "@prisma/client";
 import ItemActions from "./ItemActions";
-import { Alert, Stack } from "@mui/material";
+import { Alert, Chip, Stack } from "@mui/material";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 
 export default function TableItems({ items }: { items: Item[] }) {
   return (
@@ -50,7 +52,16 @@ export default function TableItems({ items }: { items: Item[] }) {
                   })}
                 </TableCell>
                 <TableCell style={{ textTransform: "capitalize" }}>
-                  {row.tipo}
+                  <Chip
+                    icon={
+                      row.tipo === "servicio" ? (
+                        <HomeRepairServiceIcon style={{ fontSize: "1rem" }} />
+                      ) : (
+                        <AssuredWorkloadIcon style={{ fontSize: "1rem" }} />
+                      )
+                    }
+                    label={row.tipo}
+                  />
                 </TableCell>
                 <TableCell>{row.codigo}</TableCell>
                 <ItemActions data={row} />

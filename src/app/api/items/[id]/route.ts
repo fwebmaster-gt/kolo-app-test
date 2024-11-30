@@ -1,3 +1,4 @@
+import prisma from "@/database/prisma";
 import { validateItemToCreate } from "@/database/validations/items";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
@@ -83,13 +84,10 @@ export async function DELETE(
   const toDelete = await prisma.item.findUnique({ where: { id: itemId } });
 
   if (!toDelete) {
-    return NextResponse.json(
-      { message: "Item ya fue eliminado" },
-      { status: 404 }
-    );
+    return NextResponse.json({ message: "Producto no existe" });
   }
 
   await prisma.item.delete({ where: { id: itemId } });
 
-  return NextResponse.json({ msg: "Eliminando " + params.id });
+  return NextResponse.json({ message: "Eliminando Correctamente" });
 }

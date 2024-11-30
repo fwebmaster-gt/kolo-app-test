@@ -7,6 +7,7 @@ import { apiClient } from "@/constants/axios";
 import TableItems from "@/components/TableItems";
 
 export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
 
 export default async function Home({
   searchParams,
