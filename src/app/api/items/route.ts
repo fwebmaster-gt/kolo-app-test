@@ -47,6 +47,9 @@ export async function GET(req: NextRequest) {
       where: filters,
       skip,
       take: pageSize,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     const totalItems = await prisma.item.count({
@@ -56,9 +59,7 @@ export async function GET(req: NextRequest) {
     const totalPages = Math.ceil(totalItems / pageSize);
 
     return NextResponse.json({
-      results: results.sort(
-        (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-      ),
+      results,
       page,
       pageSize,
       totalItems,
