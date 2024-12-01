@@ -20,7 +20,9 @@ export async function GET(req: NextRequest) {
 
     const skip = (page - 1) * pageSize;
 
-    const filters: any = {};
+    const filters: any = {
+      deleted: false,
+    };
 
     if (search) {
       filters.OR = [

@@ -18,8 +18,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import { apiClient } from "@/constants/axios";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { formatDateEs } from "@/constants/dates";
 
 const ItemDetails = ({ data }: { data: Item }) => {
   const router = useRouter();
@@ -133,9 +132,7 @@ const ItemDetails = ({ data }: { data: Item }) => {
           }}
         >
           <b>Creado</b>
-          <p>
-            {format(data.createdAt, "d 'de' MMMM 'del' yyyy", { locale: es })}
-          </p>
+          <p>{formatDateEs(data.createdAt)}</p>
         </div>
 
         <Divider orientation="horizontal" style={{ margin: "1rem 0" }} />
@@ -148,9 +145,7 @@ const ItemDetails = ({ data }: { data: Item }) => {
           }}
         >
           <b>Actualizado</b>
-          <p>
-            {format(data.updatedAt, "d 'de' MMMM 'del' yyyy", { locale: es })}
-          </p>
+          <p>{formatDateEs(data.updatedAt)}</p>
         </div>
 
         <Divider orientation="horizontal" style={{ margin: "1rem 0" }} />

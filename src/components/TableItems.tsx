@@ -13,8 +13,7 @@ import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import { formatPrice } from "@/constants/price";
 import Link from "next/link";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { formatDateEs } from "@/constants/dates";
 
 export default function TableItems({ items }: { items: Item[] }) {
   return (
@@ -64,11 +63,7 @@ export default function TableItems({ items }: { items: Item[] }) {
                   />
                 </TableCell>
                 <TableCell>{row.codigo}</TableCell>
-                <TableCell>
-                  {format(row.createdAt, "d 'de' MMMM 'del' yyyy", {
-                    locale: es,
-                  })}
-                </TableCell>
+                <TableCell>{formatDateEs(row.createdAt)}</TableCell>
                 <TableCell align="center">
                   <Link href={`/items/${row.id}`}>
                     <Button>

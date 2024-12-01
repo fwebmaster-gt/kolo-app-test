@@ -17,6 +17,7 @@ import {
 import { es } from "date-fns/locale";
 import { format } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
+import { formatDateEs } from "@/constants/dates";
 
 export default function DateRangePickerCustom() {
   const router = useRouter();
@@ -82,10 +83,11 @@ export default function DateRangePickerCustom() {
         {searchParams.get("startDate") && searchParams.get("endDate") ? (
           <div>
             <p style={{ fontSize: "10px", textAlign: "center" }}>
-              <b>Desde</b> {searchParams.get("startDate") || "Sin fecha"}
+              <b>Desde</b>{" "}
+              {formatDateEs(searchParams.get("startDate") as string)}
             </p>
             <p style={{ fontSize: "10px", textAlign: "center" }}>
-              <b>Hasta</b> {searchParams.get("endDate") || "Sin fecha"}
+              <b>Hasta</b> {formatDateEs(searchParams.get("endDate") as string)}
             </p>
             <Button fullWidth onClick={() => setIsPicking(true)}>
               Editar

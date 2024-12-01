@@ -87,7 +87,13 @@ export async function DELETE(
     return NextResponse.json({ message: "Producto no existe" });
   }
 
-  await prisma.item.delete({ where: { id: itemId } });
+  await prisma.item.update({
+    where: { id: itemId },
+    data: {
+      deleted: true,
+      deletedAt: new Date(Date.now()),
+    },
+  });
 
   return NextResponse.json({ message: "Eliminando Correctamente" });
 }
