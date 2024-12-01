@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
+import DateRangePickerCustom from "./RangePicker";
 
 export default function Filter() {
   const [showFilters, setShowFilters] = useState(true);
@@ -91,6 +92,8 @@ export default function Filter() {
             border: "1px solid #E7E7E8",
             padding: "1rem",
             borderRadius: "0 0 5px 5px",
+            display: "flex",
+            gap: "2rem",
           }}
         >
           <FormControl>
@@ -110,6 +113,19 @@ export default function Filter() {
               <MenuItem value={"bien"}>Bien</MenuItem>
             </Select>
           </FormControl>
+
+          <div
+            style={{
+              background: "white",
+              border: "2px solid #E7E7E8",
+              padding: "0.5rem",
+              borderRadius: "1rem",
+              display: "flex",
+              gap: "2rem",
+            }}
+          >
+            <DateRangePickerCustom />
+          </div>
         </div>
       )}
     </div>

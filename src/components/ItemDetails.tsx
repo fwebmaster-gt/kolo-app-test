@@ -18,6 +18,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import { apiClient } from "@/constants/axios";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 const ItemDetails = ({ data }: { data: Item }) => {
   const router = useRouter();
@@ -119,6 +121,36 @@ const ItemDetails = ({ data }: { data: Item }) => {
         >
           <b>Precio</b>
           <p> Q{formatPrice(data.precio)}</p>
+        </div>
+
+        <Divider orientation="horizontal" style={{ margin: "1rem 0" }} />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <b>Creado</b>
+          <p>
+            {format(data.createdAt, "d 'de' MMMM 'del' yyyy", { locale: es })}
+          </p>
+        </div>
+
+        <Divider orientation="horizontal" style={{ margin: "1rem 0" }} />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <b>Actualizado</b>
+          <p>
+            {format(data.updatedAt, "d 'de' MMMM 'del' yyyy", { locale: es })}
+          </p>
         </div>
 
         <Divider orientation="horizontal" style={{ margin: "1rem 0" }} />

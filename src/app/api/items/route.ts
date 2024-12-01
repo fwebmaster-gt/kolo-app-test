@@ -2,6 +2,7 @@
 
 import prisma from "@/database/prisma";
 import { validateItemToCreate } from "@/database/validations/items";
+import { addDays } from "date-fns";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 import slugify from "slugify";
@@ -28,10 +29,11 @@ export async function GET(req: NextRequest) {
       ];
     }
     if (tipo) filters.tipo = tipo;
+
     if (startDate && endDate) {
       filters.createdAt = {
         gte: new Date(startDate),
-        lte: new Date(endDate),
+        lte: addDays(new Date(endDate), 1),
       };
     } else if (startDate) {
       filters.createdAt = { gte: new Date(startDate) };
@@ -52,7 +54,9 @@ export async function GET(req: NextRequest) {
     const totalPages = Math.ceil(totalItems / pageSize);
 
     return NextResponse.json({
-      results,
+      results: results.sort(
+        (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+      ),
       page,
       pageSize,
       totalItems,

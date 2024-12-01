@@ -4,6 +4,11 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/constants/theme";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
+// lib styles
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+
+// app styles
 import "./globals.css";
 
 export const metadata: Metadata = {
