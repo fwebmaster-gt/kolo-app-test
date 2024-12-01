@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Live Demo
 
-## Getting Started
+Puedes visitar el [Live Demo](https://kolo-app.fwebmaster.com/)
 
-First, run the development server:
+## Instalar Dependencias
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+`npm install`
+
+## Iniciar Modo Desarrollo
+
+`npm run dev`
+
+## Crear Build
+
+`npm run build`
+
+## Ejecutar Build
+
+`npm run start`
+
+## Listado De Dependencias
+
+- `MUI`: Para los estilos como indica los requerimientos
+- `Next` & Ts: En su version `14` con `App-Router` como lo indican los requerimientos
+- `Prisma ORM`: Para el manejo de la base de datos en `MONGODB`
+- `date/fns`: Para el manejo de fechas
+- `nanoid & slugify`: Para la generacion de codigo de producto (Item)
+- `react-date-range`: Componente para tomas rango de fechas;
+- `react-hook-form`: para la validacion de formularios en el frontend
+- `axios`: Para realizar los request al backend
+- `react-hot-toast`: Para mostrar alertas interactivas
+- `nextjs-toploader`: libreria para manejar renderizar el estado de carga en una pagina
+
+## Estructura de Base de datos
+
+- Se utilizo `MongoDB` & `Prisma ORM` para la gestion de los datos.
+
+- El el archivo `.env` se puede cambiar el `STRING_CONNECTION`;
+
+```
+DATABASE_URL="mongodb+srv://freddy:swed20122000@cluster0.egyqs.mongodb.net/kolo-app"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- La esquema de la base de datos se conforma por una tabla `Item` y un `ENUM` para los `Tipos`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```prisma
+enum TipoItem {
+    bien
+    servicio
+}
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+model Item {
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
+    nombre String
+    codigo String @unique
 
-## Learn More
+    tipo TipoItem
 
-To learn more about Next.js, take a look at the following resources:
+    precio Float @default(0)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+```
 
-## Deploy on Vercel
+## Estructura de folders
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+├── api/items/
+│   ├── [id]/
+│   │   └── route.ts
+│   └── route.ts
+├── items/
+│   ├── [id]/
+│   │   └── edit/
+│   │       └── page.tsx
+│   └── create/
+│       └── page.tsx
+├── globals.css
+├── layout.tsx
+└── page.tsx
+components/
+constants/
+database/
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Filtrado de datos
+
+Todos los filtros y paginaciones se realizaron en el backend o api-routes de Next, dejando como unica tarea al frontend de enviar parametros al backend para que este se encarge del resto.
